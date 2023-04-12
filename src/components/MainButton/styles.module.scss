@@ -1,0 +1,47 @@
+.button {
+  color: white;
+  background-color: rgba(68, 164, 165, 1);
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: SF Pro Display, sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+  transition-property: all;
+  transition-duration: 0.2s;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: 40px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(52, 126, 127, 1);
+  }
+
+  &.secondary {
+    color: #44a4a5;
+    background-color: rgba(248, 249, 250, 1);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(248, 249, 250, 1);
+
+    &:hover {
+      border-color: #44a4a5;
+      border-color: rgba(68, 164, 165, 1);
+    }
+  }
+
+  &.disabled {
+    background-color: rgba(226, 225, 228, 1);
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: rgba(226, 225, 228, 1);
+    }
+  }
+}

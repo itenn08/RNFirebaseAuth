@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "348540234124",
+    "project_id": "reactnativeauthtest-f0f7a",
+    "storage_bucket": "reactnativeauthtest-f0f7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348540234124:android:2b07164666fd8b28754ea9",
+        "android_client_info": {
+          "package_name": "com.nativeauthtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348540234124-icat23goe35qee929g745gg65plavkma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nativeauthtest",
+            "certificate_hash": "cc2b9e33d39d1a8727c1961e01589d6b4c3fb1f1"
+          }
+        },
+        {
+          "client_id": "348540234124-jh52d1l136efrnepa8v9nqarf5ub99tn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbPa7SwL0Bw5Loo4vlo-FVYqs2IJ9Y0PI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "348540234124-jh52d1l136efrnepa8v9nqarf5ub99tn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "348540234124-8g48v4av4tkfk1vq4d1jsgrbcf7qjqoe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NativeTestApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
