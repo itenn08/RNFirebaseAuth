@@ -21,7 +21,10 @@ import styles from './styles';
 //   onFacebookButtonPress,
 //   onGoogleButtonPress,
 // } from '../../../utils/socialAuth';
-
+import {
+  onFacebookButtonPress,
+  onGoogleButtonPress,
+} from '../../../utils/socialAuth';
 interface IProps {
   toSignIn: () => void;
 }
@@ -53,7 +56,7 @@ const SignUpForm = ({toSignIn}: IProps) => {
 
   const onGoogleAuth = async () => {
     console.log('1111', 1111);
-    // await onGoogleButtonPress();
+    await onGoogleButtonPress();
     console.log('test :>> ');
   };
 
@@ -65,7 +68,7 @@ const SignUpForm = ({toSignIn}: IProps) => {
 
   const onFbAuth = async () => {
     console.log('1111', 1111);
-    // await onFacebookButtonPress();
+    await onFacebookButtonPress();
     console.log('test :>> ');
   };
 

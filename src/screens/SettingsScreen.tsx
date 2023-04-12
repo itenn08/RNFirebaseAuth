@@ -56,6 +56,7 @@ const SettingsScreen = ({navigation}: any) => {
               onPress={() => logout()}
               mode="outlined"
               style={{display: 'flex', justifyContent: 'center'}}
+              textColor="#FFFF"
               buttonColor="#44a4a5">
               Log out
             </Button>

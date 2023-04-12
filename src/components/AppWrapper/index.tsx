@@ -4,8 +4,8 @@ import {useDispatch} from 'react-redux';
 import {setAuth, setUser} from '../../store/reducers/user';
 import {View} from 'react-native';
 import {Portal} from 'react-native-paper';
-// import {GoogleSignin} from '@react-native-google-signin/google-signin';
-// import {Settings} from 'react-native-fbsdk-next';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {Settings} from 'react-native-fbsdk-next';
 
 const AppWrapper = ({children}: any) => {
   const [initializing, setInitializing] = useState(true);
@@ -19,6 +19,7 @@ const AppWrapper = ({children}: any) => {
     if (user) {
       dispatch(setUser(user));
       dispatch(setAuth(true));
+      if (initializing) setInitializing(false);
       return;
     }
 
@@ -29,13 +30,13 @@ const AppWrapper = ({children}: any) => {
   }
 
   useEffect(() => {
-    // Settings.setAppID('238333602020443');
-    // Settings.initializeSDK();
+    Settings.setAppID('238333602020443');
+    Settings.initializeSDK();
 
-    // GoogleSignin.configure({
-    //   webClientId:
-    //     '74192060792-4aqf35v9h38b432jcr71hc5c4e113tjo.apps.googleusercontent.com',
-    // });
+    GoogleSignin.configure({
+      webClientId:
+        '348540234124-fg2gmjcvgrfp7ba70n5l76t39m2sj5ve.apps.googleusercontent.com',
+    });
 
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     console.log('subscriber', subscriber);
