@@ -509,6 +509,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = NativeAuthTest/NativeAuthTest.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C2Y3LDS677;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = NativeAuthTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -537,6 +538,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = NativeAuthTest/NativeAuthTest.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C2Y3LDS677;
 				INFOPLIST_FILE = NativeAuthTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

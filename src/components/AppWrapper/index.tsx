@@ -9,13 +9,10 @@ import {Settings} from 'react-native-fbsdk-next';
 
 const AppWrapper = ({children}: any) => {
   const [initializing, setInitializing] = useState(true);
-  // const [user, setUser] = useState();
 
   const dispatch = useDispatch();
 
-  // Handle user state changes
   function onAuthStateChanged(user: any) {
-    console.log('user', user);
     if (user) {
       dispatch(setUser(user));
       dispatch(setAuth(true));
@@ -25,7 +22,6 @@ const AppWrapper = ({children}: any) => {
 
     setUser(null);
     dispatch(setAuth(false));
-    console.log('false :>> ', false);
     if (initializing) setInitializing(false);
   }
 
@@ -39,23 +35,15 @@ const AppWrapper = ({children}: any) => {
     });
 
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    console.log('subscriber', subscriber);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-  console.log('initializing', initializing);
-  if (initializing) return null;
 
-  // if (!user) {
-  //   console.log('not logg');
-  // }
-  console.log('test :>> ');
+    return subscriber;
+  }, []);
+
+  if (initializing) return null;
 
   return (
     <View>
-      <Portal>
-        {/* <Text>123</Text> */}
-        {children}
-      </Portal>
+      <Portal>{children}</Portal>
     </View>
   );
 };
