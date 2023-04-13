@@ -7,11 +7,15 @@ import type {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 
 export type HomeStackNavigatorParamList = {
   Home: undefined;
-  SignIn: undefined;
   Details: {
     name: string;
     birthYear: string;
   };
+};
+
+export type AuthStackNavigatorParamList = {
+  SignUpScreen: undefined;
+  SignInScreen: undefined;
 };
 
 export type BottomTabNavigatorParamList = {

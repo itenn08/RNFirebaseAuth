@@ -1,9 +1,11 @@
 import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
+import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {setAuth, setUser} from '../store/reducers/user';
-// import {axiosClient} from '../utils/axios';
 
 export type UserAuth = {
   email: string;
@@ -28,53 +30,10 @@ export type UserProfileUpdate = {
   avatar_id?: string;
 };
 
-// type SocialAuth = {
-//   type: string;
-//   token: string;
-//   language: string;
-// };
-
-// type CheckAuth = {
-//   user: any;
-//   onSuccess?: () => void;
-//   onFailed?: () => void;
-//   notLogged?: () => void;
-// };
-
 export const useAuth = () => {
   const dispatch = useDispatch();
 
   const [isLoading, setLoading] = useState<boolean>(true);
-
-  // const cookieService = new CookieService();
-
-  // const signIn = async (
-  //   user: UserAuth,
-  //   onSuccess?: () => void,
-  //   onError?: (e: any) => void,
-  // ) => {
-  //   try {
-  //     const {data} = await AuthClient.signIn(user);
-  //     if (data?.token.access_token) {
-  //       cookieService.setToken(data?.token.access_token);
-  //       axiosClient.defaults.headers.common.Authorization = `Bearer ${data?.token.access_token}`;
-  //       dispatch(setAuth(true));
-
-  //       await getProfile();
-  //       if (onSuccess) {
-  //         onSuccess();
-  //       }
-  //       return data?.data;
-  //     }
-  //   } catch (e) {
-  //     dispatch(setAuth(false));
-
-  //     if (onError) {
-  //       onError(e);
-  //     }
-  //     return false;
-  //   }
-  // };
 
   const signUpEmail = async (
     user: UserSignUpAuth,
@@ -82,36 +41,13 @@ export const useAuth = () => {
     onError?: (e: any) => void,
   ) => {
     try {
-      // const data = await auth()
-      //   .createUserWithEmailAndPassword(user.email, user.password)
-      //   .then(() => {
-      //     console.log('User account created & signed in!');
-      //   })
-      //   .catch(error => {
-      //     if (error.code === 'auth/email-already-in-use') {
-      //       console.log('That email address is already in use!');
-      //     }
-
-      //     if (error.code === 'auth/invalid-email') {
-      //       console.log('That email address is invalid!');
-      //     }
-
-      //     console.error(error);
-      //   });
-      console.log('user from AUTH', user);
       const data = await auth().createUserWithEmailAndPassword(
         user.email,
         user.password,
       );
-      // const data = null;
 
-      console.log('data :>> ', data);
       if (data) {
-        // cookieService.setToken(data?.token.access_token);
-        // axiosClient.defaults.headers.common.Authorization = `Bearer ${data?.token.access_token}`;
         dispatch(setAuth(true));
-
-        // await getProfile();
 
         if (onSuccess) {
           onSuccess();
@@ -123,7 +59,6 @@ export const useAuth = () => {
       if (onError) {
         let error = '';
         if (e) {
-          console.log('e?.code', e?.code);
           if (e?.code === 'auth/email-already-in-use') {
             error = 'That email address is already in use!';
           }
@@ -137,80 +72,96 @@ export const useAuth = () => {
     }
   };
 
-  // const checkAuth = async ({
-  //   user,
-  //   onSuccess,
-  //   onFailed,
-  //   notLogged,
-  // }: CheckAuth) => {
-  //   if (!cookieService.getToken() && !user?.isAuth) {
-  //     if (notLogged) {
-  //       notLogged();
-  //     }
-  //     return;
-  //   }
+  const signUpSocial = async (
+    type: 'google' | 'facebook' | 'apple',
+    onSuccess?: () => void,
+    onError?: (e: any) => void,
+  ) => {
+    try {
+      let credentials;
 
-  //   if (user?.isAuth) {
-  //     if (onSuccess) {
-  //       onSuccess();
-  //     }
-  //     return;
-  //   }
+      if (type === 'google') {
+        await GoogleSignin.hasPlayServices({
+          showPlayServicesUpdateDialog: true,
+        });
+        // Get the users ID token
+        const {idToken} = await GoogleSignin.signIn();
 
-  //   if (cookieService.getToken()) {
-  //     const profile = await getProfile(onSuccess);
-  //     if (profile) {
-  //       if (onSuccess) {
-  //         onSuccess();
-  //       }
-  //       return;
-  //     }
-  //   }
+        // Create a Google credential with the token
+        credentials = auth.GoogleAuthProvider.credential(idToken);
+      }
 
-  //   if (onFailed) {
-  //     onFailed();
-  //   }
-  // };
+      if (type === 'facebook') {
+        const result = await LoginManager.logInWithPermissions([
+          'public_profile',
+          'email',
+        ]);
 
-  // const getProfile = async (cb?: () => void) => {
-  //   try {
-  //     setLoading(true);
-  //     const profile = await UserService.getProfile();
-  //     dispatch(setUser(profile?.data));
-  //     dispatch(setAuth(true));
+        if (result.isCancelled) {
+          throw 'User cancelled the login process';
+        }
 
-  //     if (cb) {
-  //       cb();
-  //     }
+        // Once signed in, get the users AccesToken
+        const data = await AccessToken.getCurrentAccessToken();
 
-  //     setLoading(false);
-  //     return true;
-  //   } catch (e) {
-  //     dispatch(setAuth(false));
-  //     setLoading(false);
-  //     logout();
-  //   }
-  // };
+        if (!data) {
+          throw 'Something went wrong obtaining access token';
+        }
+
+        // Create a Firebase credential with the AccessToken
+        credentials = auth.FacebookAuthProvider.credential(data.accessToken);
+      }
+
+      if (type === 'apple') {
+        const appleAuthRequestResponse = await appleAuth.performRequest({
+          requestedOperation: appleAuth.Operation.LOGIN,
+          requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+        });
+
+        // Ensure Apple returned a user identityToken
+        if (!appleAuthRequestResponse.identityToken) {
+          throw new Error('Apple Sign-In failed - no identify token returned');
+        }
+
+        // Create a Firebase credential from the response
+        const {identityToken, nonce} = appleAuthRequestResponse;
+        credentials = auth.AppleAuthProvider.credential(identityToken, nonce);
+      }
+
+      if (credentials) {
+        const data = await auth().signInWithCredential(credentials);
+        if (data) {
+          dispatch(setAuth(true));
+
+          if (onSuccess) {
+            onSuccess();
+            return;
+          }
+          return;
+        }
+      }
+
+      if (onError) {
+        onError('Something went wrong');
+      }
+    } catch (e: any) {
+      dispatch(setAuth(false));
+      if (onError) {
+        onError('Something went wrong');
+      }
+    }
+  };
 
   const logout = async () => {
-    // const data = await auth().signOut();
-    // console.log('data :>> ', data);
     dispatch(setUser(null));
     dispatch(setAuth(false));
     setLoading(false);
   };
 
   return {
-    // signIn,
-    // signUp,
     logout,
-    // signUpSocial,
-    // updateProfile,
-    // getProfile,
-    // checkAuth,
-    // forgotPassword,
+    signUpSocial,
     signUpEmail,
-
     isLoading,
     setLoading,
   };

@@ -16,11 +16,6 @@ import fbIcon from '../../../assets/images/auth/fb.png';
 import logo from '../../../assets/images/LogoBlackEn.png';
 
 import styles from './styles';
-// import {
-//   onAppleButtonPress,
-//   onFacebookButtonPress,
-//   onGoogleButtonPress,
-// } from '../../../utils/socialAuth';
 
 interface IProps {
   toSignIn: () => void;
@@ -32,10 +27,11 @@ const SignUpForm = ({toSignIn}: IProps) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const {signUpEmail} = useAuth();
+  const {signUpEmail, signUpSocial} = useAuth();
 
   const onSuccessSignUp = () => {
-    console.log('goood');
+    // TODO: Add something after sign up
+    return;
   };
 
   async function signUp() {
@@ -52,21 +48,15 @@ const SignUpForm = ({toSignIn}: IProps) => {
   }
 
   const onGoogleAuth = async () => {
-    console.log('1111', 1111);
-    // await onGoogleButtonPress();
-    console.log('test :>> ');
+    signUpSocial('google');
   };
 
   const onAppleAuth = async () => {
-    console.log('1111', 1111);
-    // await onAppleButtonPress();
-    console.log('test :>> ');
+    Alert.alert('Sorry, I skipped this step :)');
   };
 
   const onFbAuth = async () => {
-    console.log('1111', 1111);
-    // await onFacebookButtonPress();
-    console.log('test :>> ');
+    signUpSocial('facebook');
   };
 
   return (

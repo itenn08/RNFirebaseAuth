@@ -1,14 +1,13 @@
 import * as React from 'react';
 import {BottomTabNavigatorParamList} from './types';
 import HomeStackNavigator from './HomeStack';
-// import SignInScreen from '../../screens/SignInScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SettingsScreen from '../../screens/SettingsScreen';
-import SignInScreen from '../../screens/SignInScreen';
 import {RootState} from '../../store/store';
 import {useSelector} from 'react-redux';
+import AuthStackNavigator from './AuthStack';
 
 const Tab = createMaterialBottomTabNavigator<BottomTabNavigatorParamList>();
 
@@ -24,14 +23,13 @@ const BottomTabs = () => {
       barStyle={{backgroundColor: 'white'}}>
       <Tab.Screen
         name="HomeStack"
-        component={isAuth ? HomeStackNavigator : SignInScreen}
+        component={isAuth ? HomeStackNavigator : AuthStackNavigator}
         options={{
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
         }}
       />
-      {/* <Tab.Screen name="SignIn" component={SignInScreen} /> */}
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
