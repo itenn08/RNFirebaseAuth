@@ -1,13 +1,14 @@
-import {useEffect, useState} from 'react';
+/* eslint-disable prettier/prettier */
+import { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import {useDispatch} from 'react-redux';
-import {setAuth, setUser} from '../../store/reducers/user';
-import {View} from 'react-native';
-import {Portal} from 'react-native-paper';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {Settings} from 'react-native-fbsdk-next';
+import { useDispatch } from 'react-redux';
+import { setAuth, setUser } from '../../store/reducers/user';
+import { View } from 'react-native';
+import { Portal } from 'react-native-paper';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { Settings } from 'react-native-fbsdk-next';
 
-const AppWrapper = ({children}: any) => {
+const AppWrapper = ({ children }: any) => {
   const [initializing, setInitializing] = useState(true);
 
   const dispatch = useDispatch();
@@ -30,8 +31,7 @@ const AppWrapper = ({children}: any) => {
     Settings.initializeSDK();
 
     GoogleSignin.configure({
-      webClientId:
-        '348540234124-fg2gmjcvgrfp7ba70n5l76t39m2sj5ve.apps.googleusercontent.com',
+      webClientId: '348540234124-fg2gmjcvgrfp7ba70n5l76t39m2sj5ve.apps.googleusercontent.com',
     });
 
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);

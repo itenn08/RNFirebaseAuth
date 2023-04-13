@@ -9,12 +9,13 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {TextInput} from 'react-native-paper';
-import {useAuth} from '../../../utils/auth';
+
 import googleIcon from '../../../assets/images/auth/google.png';
 import appleIcon from '../../../assets/images/auth/apple.png';
 import fbIcon from '../../../assets/images/auth/fb.png';
 import logo from '../../../assets/images/LogoBlackEn.png';
 import styles from './styles';
+import {useAuth} from '../../../hooks/useAuth';
 
 interface IProps {
   toSignUp: () => void;
@@ -24,24 +25,30 @@ const SignInForm = ({toSignUp}: IProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const {signUpEmail, signUpSocial} = useAuth();
+  const {signInEmail, signUpSocial} = useAuth();
 
   const onSuccessSignIn = () => {
     // TODO: Add something after sign up
     return;
   };
 
-  async function signUp() {
+  async function signIn() {
     if (email === '' || password === '') {
       Alert.alert('Email and password are mandatory.');
       return;
     }
+
     if (password === '') {
       Alert.alert('Email and password are mandatory.');
       return;
     }
 
-    signUpEmail({email, password}, onSuccessSignIn, e => Alert.alert(e));
+    const onSignInError = (e: string) => {
+      Alert.alert(e);
+      setPassword('');
+    };
+
+    signInEmail({email, password}, onSuccessSignIn, e => onSignInError(e));
   }
 
   const onGoogleAuth = async () => {
@@ -88,7 +95,7 @@ const SignInForm = ({toSignUp}: IProps) => {
               autoCapitalize="none"
             />
 
-            <TouchableOpacity style={styles.button} onPress={() => signUp()}>
+            <TouchableOpacity style={styles.button} onPress={() => signIn()}>
               <Text style={styles.buttonTitle}>Sign in</Text>
             </TouchableOpacity>
             <View style={styles.footerView}>

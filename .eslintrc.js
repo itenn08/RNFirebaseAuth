@@ -37,6 +37,7 @@ module.exports = {
     'react/no-unescaped-entities': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'space-in-brackets': 'off',
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
   },
