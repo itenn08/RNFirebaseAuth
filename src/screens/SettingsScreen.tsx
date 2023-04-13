@@ -3,20 +3,15 @@ import {Text, ScrollView, View} from 'react-native';
 import {Appbar, Button} from 'react-native-paper';
 import {RootState} from '../store/store';
 import {useSelector} from 'react-redux';
-import {useAuth} from '../utils/auth';
+import {useAuth} from '../hooks/useAuth';
 
 const SettingsScreen = ({navigation}: any) => {
   const {isAuth, user} = useSelector((state: RootState) => state.user);
   const {logout} = useAuth();
-  console.log('user :>> ', user);
 
   const toSignIn = () => {
     navigation.navigate('HomeStack');
   };
-
-  // const goBack = () => {
-  //   navigation.navigate('HomeStack');
-  // };
 
   return (
     <ScrollView>

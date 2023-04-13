@@ -9,20 +9,20 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {TextInput} from 'react-native-paper';
-import {useAuth} from '../../../utils/auth';
+
 import googleIcon from '../../../assets/images/auth/google.png';
 import appleIcon from '../../../assets/images/auth/apple.png';
 import fbIcon from '../../../assets/images/auth/fb.png';
 import logo from '../../../assets/images/LogoBlackEn.png';
 
 import styles from './styles';
+import {useAuth} from '../../../hooks/useAuth';
 
 interface IProps {
   toSignIn: () => void;
 }
 
 const SignUpForm = ({toSignIn}: IProps) => {
-  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -41,6 +41,11 @@ const SignUpForm = ({toSignIn}: IProps) => {
     }
     if (password === '') {
       Alert.alert('Email and password are mandatory.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Confirm password is wrong.');
       return;
     }
 
@@ -70,15 +75,6 @@ const SignUpForm = ({toSignIn}: IProps) => {
             <View style={styles.logoWrapper}>
               <Image source={logo} />
             </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Full Name"
-              placeholderTextColor="#aaaaaa"
-              onChangeText={text => setFullName(text)}
-              value={fullName}
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-            />
             <TextInput
               style={styles.input}
               placeholder="E-mail"
