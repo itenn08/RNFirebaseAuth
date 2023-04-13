@@ -1,10 +1,8 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {Appbar} from 'react-native-paper';
 
-import SignUpForm from '../../components/auth/SignUpForm';
-
-const SignUpScreen = ({navigation}: any) => {
+const SignUpPhoneScreen = ({navigation}: any) => {
   return (
     <ScrollView>
       <Appbar.Header
@@ -12,11 +10,13 @@ const SignUpScreen = ({navigation}: any) => {
           backgroundColor: '#44a4a5',
         }}>
         <Appbar.BackAction onPress={() => navigation.pop()} color="white" />
-        <Appbar.Content title={'Sign up'} color="#FFF" />
+        <Appbar.Content title={'Sign up via phone'} color="#FFF" />
       </Appbar.Header>
-      <SignUpForm toSignIn={() => navigation.navigate('SignInScreen')} />
+      <View>
+        <Text>Phone screen</Text>
+      </View>
     </ScrollView>
   );
 };
 
-export default SignUpScreen;
+export default SignUpPhoneScreen;
