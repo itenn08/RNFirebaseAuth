@@ -170,6 +170,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)' // FOR FB
     implementation 'com.google.android.gms:play-services-auth:20.5.0' // FOR GOOGLE AUTH
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1' // FOR PHONE AUTH
+    implementation 'com.google.android.play:integrity:1.1.0' // FOR PHONE AUTH
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

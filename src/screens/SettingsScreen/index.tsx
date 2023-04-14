@@ -1,9 +1,10 @@
 import React from 'react';
 import {Text, ScrollView, View} from 'react-native';
 import {Appbar, Button} from 'react-native-paper';
-import {RootState} from '../store/store';
+import {RootState} from '../../store/store';
 import {useSelector} from 'react-redux';
-import {useAuth} from '../hooks/useAuth';
+import {useAuth} from '../../hooks/useAuth';
+import styles from './styles';
 
 const SettingsScreen = ({navigation}: any) => {
   const {isAuth, user} = useSelector((state: RootState) => state.user);
@@ -22,13 +23,7 @@ const SettingsScreen = ({navigation}: any) => {
         <Appbar.BackAction color="#FFF" onPress={toSignIn} />
         <Appbar.Content title="Settings" color="#FFF" />
       </Appbar.Header>
-      <View
-        style={{
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginVertical: 100,
-        }}>
+      <View style={styles.container}>
         {user && (
           <Text
             style={{

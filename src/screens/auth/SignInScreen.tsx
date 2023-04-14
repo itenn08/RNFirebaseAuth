@@ -4,7 +4,6 @@ import {Appbar} from 'react-native-paper';
 import SignInForm from '../../components/auth/SignInForm';
 
 const SignInScreen = ({navigation}: any) => {
-  console.log('navigation :>> ', navigation);
   return (
     <ScrollView>
       <Appbar.Header
