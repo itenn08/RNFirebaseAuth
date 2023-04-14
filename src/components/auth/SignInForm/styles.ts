@@ -3,9 +3,11 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
   },
-  title: {},
+  inner: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   logoWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -39,7 +41,6 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   footerView: {
-    flex: 1,
     alignItems: 'center',
     marginTop: 20,
   },
@@ -51,6 +52,7 @@ export default StyleSheet.create({
     color: '#44a4a5',
     fontWeight: 'bold',
     fontSize: 16,
+    marginHorizontal: 8,
   },
   socialWrapper: {
     display: 'flex',
@@ -85,5 +87,9 @@ export default StyleSheet.create({
     flex: 1,
     width: 16,
     height: 16,
+  },
+  disabled: {
+    color: 'white',
+    backgroundColor: 'gray',
   },
 });

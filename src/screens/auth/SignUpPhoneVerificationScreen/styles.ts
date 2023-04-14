@@ -1,10 +1,19 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
+  header: {
+    backgroundColor: '#44a4a5',
+  },
   container: {
-    height: '100%',
-    justifyContent: 'center',
+    flex: 1,
     marginHorizontal: 30,
+  },
+  inner: {
+    flex: 1,
+    justifyContent: 'center',
   },
   input: {
     height: 48,
