@@ -12,6 +12,7 @@
     "pod_install": "cd ios && pod install && ../",
     "force_android": "npx react-native run-android",
     "force_ios": "npx react-native run-ios",
+    "build_android": "cd android && ./gradlew assembleRelease && cd ../",
     "test": "jest"
   },
   "dependencies": {

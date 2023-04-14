@@ -16,6 +16,9 @@ export type HomeStackNavigatorParamList = {
 export type AuthStackNavigatorParamList = {
   SignUpScreen: undefined;
   SignInScreen: undefined;
+  SignUpEmailScreen: undefined;
+  SignUpPhoneScreen: undefined;
+  SignUpPhoneVerificationScreen: undefined;
 };
 
 export type BottomTabNavigatorParamList = {

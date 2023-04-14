@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import {
   Alert,
   Image,
-  ScrollView,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {TextInput} from 'react-native-paper';
 
 import googleIcon from '../../../assets/images/auth/google.png';
@@ -19,9 +21,10 @@ import {useAuth} from '../../../hooks/useAuth';
 
 interface IProps {
   toSignUp: () => void;
+  signInWithPhone: () => void;
 }
 
-const SignInForm = ({toSignUp}: IProps) => {
+const SignInForm = ({toSignUp, signInWithPhone}: IProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -64,69 +67,80 @@ const SignInForm = ({toSignUp}: IProps) => {
   };
 
   return (
-    <View>
-      <ScrollView>
-        <KeyboardAwareScrollView
-          style={{flex: 1, width: '100%'}}
-          keyboardShouldPersistTaps="always"
-          scrollEnabled={true}>
-          <View>
-            <View style={styles.logoWrapper}>
-              <Image source={logo} />
-            </View>
+    <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.inner}>
+            <View>
+              <View style={styles.logoWrapper}>
+                <Image source={logo} />
+              </View>
 
-            <TextInput
-              style={styles.input}
-              placeholder="E-mail"
-              placeholderTextColor="#aaaaaa"
-              onChangeText={text => setEmail(text)}
-              value={email}
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-            />
-            <TextInput
-              style={styles.input}
-              placeholderTextColor="#aaaaaa"
-              secureTextEntry
-              placeholder="Password"
-              onChangeText={text => setPassword(text)}
-              value={password}
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-            />
+              <TextInput
+                style={styles.input}
+                placeholder="E-mail"
+                placeholderTextColor="#aaaaaa"
+                onChangeText={text => setEmail(text)}
+                value={email}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={styles.input}
+                placeholderTextColor="#aaaaaa"
+                secureTextEntry
+                placeholder="Password"
+                onChangeText={text => setPassword(text)}
+                value={password}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+              />
 
-            <TouchableOpacity style={styles.button} onPress={() => signIn()}>
-              <Text style={styles.buttonTitle}>Sign in</Text>
-            </TouchableOpacity>
-            <View style={styles.footerView}>
-              <Text style={styles.footerText}>
-                Don't have an account?
-                <Text onPress={() => toSignUp()} style={styles.footerLink}>
-                  Sign up
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  (!email || !password) && styles.disabled,
+                ]}
+                onPress={() => email && password && signIn()}>
+                <Text style={styles.buttonTitle}>Sign in</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => signInWithPhone()}>
+                <Text style={styles.buttonTitle}>Sign in with Phone</Text>
+              </TouchableOpacity>
+              <View style={styles.footerView}>
+                <Text style={styles.footerText}>
+                  Don't have an account?{' '}
+                  <Text onPress={() => toSignUp()} style={styles.footerLink}>
+                    Sign up
+                  </Text>
                 </Text>
-              </Text>
+              </View>
+            </View>
+
+            <View style={styles.socialWrapper}>
+              <TouchableOpacity
+                style={[styles.socialBtn, styles.fb]}
+                onPress={onFbAuth}>
+                <Image source={fbIcon} style={styles.socialFbBtnIcon} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.socialBtn, styles.google]}
+                onPress={onGoogleAuth}>
+                <Image source={googleIcon} style={styles.socialBtnIcon} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.socialBtn, styles.apple]}
+                onPress={onAppleAuth}>
+                <Image source={appleIcon} style={styles.socialBtnIcon} />
+              </TouchableOpacity>
             </View>
           </View>
-
-          <View style={styles.socialWrapper}>
-            <TouchableOpacity
-              style={[styles.socialBtn, styles.fb]}
-              onPress={onFbAuth}>
-              <Image source={fbIcon} style={styles.socialFbBtnIcon} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.socialBtn, styles.google]}
-              onPress={onGoogleAuth}>
-              <Image source={googleIcon} style={styles.socialBtnIcon} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.socialBtn, styles.apple]}
-              onPress={onAppleAuth}>
-              <Image source={appleIcon} style={styles.socialBtnIcon} />
-            </TouchableOpacity>
-          </View>
-        </KeyboardAwareScrollView>
-      </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </View>
   );
 };
