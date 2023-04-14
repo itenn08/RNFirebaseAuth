@@ -5,17 +5,19 @@ import styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../store/store';
 import {setPhoneConfirmation} from '../../../store/reducers/user';
+import {useAuth} from '../../../hooks/useAuth';
 
 const SignUpPhoneScreen = ({navigation}: any) => {
   const {phoneConfirmation} = useSelector((state: RootState) => state.user);
   const [verificationCode, setVerificationCode] = useState('');
 
+  const {verificationCodePhoneNumber} = useAuth();
+
   const dispatch = useDispatch();
 
   const onSubmit = async () => {
     try {
-      const result = await phoneConfirmation?.confirm(verificationCode);
-      console.log('result :>> ', result);
+      await verificationCodePhoneNumber(phoneConfirmation, verificationCode);
     } catch (error) {
       Alert.alert('Invalid code.');
       dispatch(setPhoneConfirmation(null));

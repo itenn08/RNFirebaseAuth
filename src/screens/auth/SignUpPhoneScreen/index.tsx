@@ -4,8 +4,10 @@ import {Appbar, Button, TextInput} from 'react-native-paper';
 import styles from './styles';
 import {useAuth} from '../../../hooks/useAuth';
 
-const SignUpPhoneScreen = ({navigation}: any) => {
+const SignUpPhoneScreen = ({route, navigation}: any) => {
   const [phoneNumber, setPhoneNumber] = useState('');
+
+  const params = route.params;
 
   const {signInPhoneNumber} = useAuth();
 
@@ -22,7 +24,10 @@ const SignUpPhoneScreen = ({navigation}: any) => {
           backgroundColor: '#44a4a5',
         }}>
         <Appbar.BackAction onPress={() => navigation.pop()} color="white" />
-        <Appbar.Content title={'Sign up via Phone number'} color="#FFF" />
+        <Appbar.Content
+          title={`${params?.isSignIn ? 'Sign in' : 'Sign up'} via Phone number`}
+          color="#FFF"
+        />
       </Appbar.Header>
       <View style={styles.container}>
         <TextInput

@@ -19,9 +19,10 @@ import {useAuth} from '../../../hooks/useAuth';
 
 interface IProps {
   toSignUp: () => void;
+  signInWithPhone: () => void;
 }
 
-const SignInForm = ({toSignUp}: IProps) => {
+const SignInForm = ({toSignUp, signInWithPhone}: IProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -97,6 +98,11 @@ const SignInForm = ({toSignUp}: IProps) => {
 
             <TouchableOpacity style={styles.button} onPress={() => signIn()}>
               <Text style={styles.buttonTitle}>Sign in</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => signInWithPhone()}>
+              <Text style={styles.buttonTitle}>Sign in with Phone</Text>
             </TouchableOpacity>
             <View style={styles.footerView}>
               <Text style={styles.footerText}>

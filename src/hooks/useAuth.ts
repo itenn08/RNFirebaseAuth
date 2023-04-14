@@ -203,6 +203,21 @@ export const useAuth = () => {
     }
   };
 
+  const verificationCodePhoneNumber = async (
+    phoneConfirmation: any,
+    verificationCode: string,
+  ) => {
+    try {
+      const result = await phoneConfirmation?.confirm(verificationCode);
+      if (result) {
+        dispatch(setAuth(true));
+        dispatch(setPhoneConfirmation(null));
+      }
+    } catch (e: any) {
+      dispatch(setPhoneConfirmation(null));
+    }
+  };
+
   const logout = () => {
     dispatch(setUser(null));
     dispatch(setAuth(false));
@@ -215,6 +230,7 @@ export const useAuth = () => {
     signUpEmail,
     signInEmail,
     signInPhoneNumber,
+    verificationCodePhoneNumber,
     isLoading,
     setLoading,
   };

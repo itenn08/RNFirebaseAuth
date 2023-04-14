@@ -13,7 +13,14 @@ const SignInScreen = ({navigation}: any) => {
         }}>
         <Appbar.Content title={'Sign in'} color="#FFF" />
       </Appbar.Header>
-      <SignInForm toSignUp={() => navigation.push('SignUpScreen')} />
+      <SignInForm
+        toSignUp={() => navigation.push('SignUpScreen')}
+        signInWithPhone={() =>
+          navigation.push('SignUpPhoneScreen', {
+            isSignIn: true,
+          })
+        }
+      />
     </ScrollView>
   );
 };
