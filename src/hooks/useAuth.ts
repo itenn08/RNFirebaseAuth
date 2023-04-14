@@ -5,7 +5,7 @@ import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {setAuth, setUser} from '../store/reducers/user';
+import {setAuth, setPhoneConfirmation, setUser} from '../store/reducers/user';
 
 export type UserAuth = {
   email: string;
@@ -191,7 +191,19 @@ export const useAuth = () => {
     }
   };
 
-  const logout = async () => {
+  const signInPhoneNumber = async (phoneNumber: string) => {
+    try {
+      const confirmation = await auth().signInWithPhoneNumber(
+        `+${phoneNumber}`,
+      );
+
+      dispatch(setPhoneConfirmation(confirmation));
+    } catch (e: any) {
+      dispatch(setPhoneConfirmation(null));
+    }
+  };
+
+  const logout = () => {
     dispatch(setUser(null));
     dispatch(setAuth(false));
     setLoading(false);
@@ -202,6 +214,7 @@ export const useAuth = () => {
     signUpSocial,
     signUpEmail,
     signInEmail,
+    signInPhoneNumber,
     isLoading,
     setLoading,
   };

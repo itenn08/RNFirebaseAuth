@@ -4,7 +4,7 @@ import {Appbar} from 'react-native-paper';
 import styles from './styles';
 import SignUpForm from '../../../components/auth/SignUpForm';
 
-const SignUpEmail = ({navigation}: any) => (
+const SignUpEmailScreen = ({navigation}: any) => (
   <View style={{height: '100%'}}>
     <Appbar.Header
       style={{
@@ -19,4 +19,4 @@ const SignUpEmail = ({navigation}: any) => (
   </View>
 );
 
-export default SignUpEmail;
+export default SignUpEmailScreen;

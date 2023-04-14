@@ -47,14 +47,14 @@ const SignUpScreen = ({navigation}: any) => {
               icon="email"
               mode="outlined"
               style={styles.button}
-              onPress={() => navigation.navigate('SignUpEmail')}>
+              onPress={() => navigation.navigate('SignUpEmailScreen')}>
               Sign up via email
             </Button>
             <Button
               icon="cellphone"
               mode="outlined"
               style={styles.button}
-              onPress={() => console.log('Pressed')}>
+              onPress={() => navigation.navigate('SignUpPhoneScreen')}>
               Sign up via phone number
             </Button>
             <View style={styles.socialWrapper}>

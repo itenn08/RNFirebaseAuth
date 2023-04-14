@@ -3,7 +3,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackNavigatorParamList} from './types';
 import SignInScreen from '../../screens/auth/SignInScreen';
 import SignUpScreen from '../../screens/auth/SignUpScreen';
-import SignUpEmail from '../../screens/auth/SignUpEmail';
+import SignUpEmailScreen from '../../screens/auth/SignUpEmailScreen';
+import SignUpPhoneScreen from '../../screens/auth/SignUpPhoneScreen';
+import SignUpPhoneVerificationScreen from '../../screens/auth/SignUpPhoneVerificationScreen';
 
 const AuthStack = createNativeStackNavigator<AuthStackNavigatorParamList>();
 
@@ -19,7 +21,18 @@ const AuthStackNavigator = () => {
       }}>
       <AuthStack.Screen name="SignInScreen" component={SignInScreen} />
       <AuthStack.Screen name="SignUpScreen" component={SignUpScreen} />
-      <AuthStack.Screen name="SignUpEmail" component={SignUpEmail} />
+      <AuthStack.Screen
+        name="SignUpEmailScreen"
+        component={SignUpEmailScreen}
+      />
+      <AuthStack.Screen
+        name="SignUpPhoneScreen"
+        component={SignUpPhoneScreen}
+      />
+      <AuthStack.Screen
+        name="SignUpPhoneVerificationScreen"
+        component={SignUpPhoneVerificationScreen}
+      />
     </AuthStack.Navigator>
   );
 };
