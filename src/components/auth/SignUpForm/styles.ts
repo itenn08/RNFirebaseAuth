@@ -1,17 +1,17 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  container: {
+  wrapper: {
+    backgroundColor: 'red',
     flex: 1,
-    alignItems: 'center',
   },
-  title: {},
-  logoWrapper: {
+  inner: {
+    padding: 24,
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    paddingVertical: 15,
+    backgroundColor: 'blue',
   },
+
   input: {
     height: 48,
     borderRadius: 5,
@@ -39,7 +39,6 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   footerView: {
-    flex: 1,
     alignItems: 'center',
     marginTop: 20,
   },

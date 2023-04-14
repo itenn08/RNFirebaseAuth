@@ -39,7 +39,7 @@ const SignUpForm = ({toSignIn}: IProps) => {
   }
 
   return (
-    <View>
+    <>
       <TextInput
         style={styles.input}
         placeholder="E-mail"
@@ -80,7 +80,7 @@ const SignUpForm = ({toSignIn}: IProps) => {
           </Text>
         </Text>
       </View>
-    </View>
+    </>
   );
 };
 

@@ -1,10 +1,13 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
   container: {
-    height: '100%',
-    justifyContent: 'center',
+    flex: 1,
     marginHorizontal: 30,
+    justifyContent: 'center',
   },
   input: {
     height: 48,

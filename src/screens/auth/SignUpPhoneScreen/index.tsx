@@ -18,7 +18,7 @@ const SignUpPhoneScreen = ({route, navigation}: any) => {
   };
 
   return (
-    <View style={{height: '100%'}}>
+    <View style={styles.wrapper}>
       <Appbar.Header
         style={{
           backgroundColor: '#44a4a5',

@@ -1,11 +1,18 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    paddingHorizontal: 30,
-    height: '100%',
+  wrapper: {
+    flex: 1,
   },
-  title: {},
+  header: {
+    backgroundColor: '#44a4a5',
+  },
+  container: {
+    flex: 1,
+    marginHorizontal: 30,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
   logoWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
