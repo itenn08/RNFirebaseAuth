@@ -31,7 +31,7 @@ const SettingsScreen = ({navigation}: any) => {
               justifyContent: 'center',
               alignContent: 'center',
             }}>
-            UserName
+            {user?.name || user?.email || user?.phoneNumber}
           </Text>
         )}
         <View

@@ -6,6 +6,8 @@ import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {setAuth, setPhoneConfirmation, setUser} from '../store/reducers/user';
+import {axiosClient} from '../utils/axios';
+import {localStorage} from '../components/AppWrapper';
 
 export type UserAuth = {
   email: string;
@@ -47,8 +49,19 @@ export const useAuth = () => {
       );
 
       if (data) {
-        dispatch(setAuth(true));
+        const {data: response} = await axiosClient.post('/user/register', {
+          email: data.user.email,
+          password: user.password,
+          name: data.user.displayName,
+          phoneNumber: data.user.phoneNumber,
+          firebase_id: data.user.uid,
+        });
 
+        localStorage.set('token', response.accessToken);
+
+        axiosClient.defaults.headers.common.Authorization = `Bearer ${response.accessToken}`;
+        dispatch(setAuth(true));
+        dispatch(setUser(response?.user));
         if (onSuccess) {
           onSuccess();
           return;
@@ -78,13 +91,17 @@ export const useAuth = () => {
     onError?: (e: any) => void,
   ) => {
     try {
-      const data = await auth().signInWithEmailAndPassword(
-        user.email,
-        user.password,
-      );
+      const {data} = await axiosClient.post('/user/login', {
+        key: user.email,
+        password: user.password,
+      });
 
       if (data) {
+        localStorage.set('token', data.accessToken);
+
+        axiosClient.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;
         dispatch(setAuth(true));
+        dispatch(setUser(data?.user));
 
         if (onSuccess) {
           onSuccess();
@@ -170,7 +187,18 @@ export const useAuth = () => {
       if (credentials) {
         const data = await auth().signInWithCredential(credentials);
         if (data) {
+          const {data: response} = await axiosClient.post('/user/socialAuth', {
+            email: data.user.email,
+            name: data.user.displayName,
+            phoneNumber: data.user.phoneNumber,
+            firebase_id: data.user.uid,
+          });
+
+          localStorage.set('token', response.accessToken);
+
+          axiosClient.defaults.headers.common.Authorization = `Bearer ${response.accessToken}`;
           dispatch(setAuth(true));
+          dispatch(setUser(response?.user));
 
           if (onSuccess) {
             onSuccess();
@@ -208,12 +236,27 @@ export const useAuth = () => {
     verificationCode: string,
   ) => {
     try {
-      const result = await phoneConfirmation?.confirm(verificationCode);
-      if (result) {
+      const data = await phoneConfirmation?.confirm(verificationCode);
+
+      const {data: response} = await axiosClient.post('/user/socialAuth', {
+        name: data.user.displayName,
+        phoneNumber: data.user.phoneNumber,
+        firebase_id: data.user.uid,
+      });
+
+      localStorage.set('token', response.accessToken);
+
+      axiosClient.defaults.headers.common.Authorization = `Bearer ${response.accessToken}`;
+      dispatch(setAuth(true));
+      dispatch(setUser(response?.user));
+
+      if (response) {
         dispatch(setAuth(true));
         dispatch(setPhoneConfirmation(null));
       }
     } catch (e: any) {
+      dispatch(setAuth(false));
+      dispatch(setUser(null));
       dispatch(setPhoneConfirmation(null));
     }
   };
