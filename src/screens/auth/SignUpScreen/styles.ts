@@ -74,5 +74,6 @@ export default StyleSheet.create({
     flex: 1,
     width: 16,
     height: 16,
+    resizeMode: 'contain',
   },
 });

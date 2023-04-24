@@ -1,6 +1,7 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {Appbar} from 'react-native-paper';
+import Twilio from '../../components/Twilio';
 import styles from './styles';
 
 const HomeScreen = () => (
@@ -8,9 +9,7 @@ const HomeScreen = () => (
     <Appbar.Header style={styles.header}>
       <Appbar.Content title={'Home'} color="#FFF" />
     </Appbar.Header>
-    <View style={styles.container}>
-      <Text>Home screen</Text>
-    </View>
+    <Twilio />
   </View>
 );
 
