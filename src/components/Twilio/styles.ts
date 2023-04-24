@@ -54,7 +54,7 @@ export default StyleSheet.create({
   },
   localVideo: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 100,
     right: 0,
     width: 100,
     height: 120,
@@ -86,8 +86,6 @@ export default StyleSheet.create({
     transform: [{translateX: -50}],
     justifyContent: 'center',
     gap: 8,
-    // height: 100,
-    // backgroundColor: 'rgba(255, 255, 255, 0.1)',
     blurRadius: 90,
   },
   videoTipText: {
@@ -108,6 +106,7 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     blurRadius: 90,
   },
   optionButton: {

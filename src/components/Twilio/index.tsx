@@ -7,12 +7,18 @@ import {
   Platform,
   TouchableOpacity,
   Image,
+  Alert,
 } from 'react-native';
 import {
   TwilioVideoLocalView,
   TwilioVideoParticipantView,
   TwilioVideo,
 } from 'react-native-twilio-video-webrtc';
+import {
+  PERMISSIONS,
+  checkMultiple,
+  requestMultiple,
+} from 'react-native-permissions';
 
 import styles from './styles';
 import cameraOffIcon from '../../assets/images/icons/cameraOff.png';
@@ -31,6 +37,39 @@ const Twilio = () => {
   const twilioVideo = useRef<any | null>(null);
 
   const _onConnectButtonPress = async () => {
+    if (Platform.OS === 'ios') {
+      try {
+        checkMultiple([
+          PERMISSIONS.IOS.CAMERA,
+          PERMISSIONS.IOS.MICROPHONE,
+        ]).then(statuses => {
+          console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
+          console.log('MICROPHONE', statuses[PERMISSIONS.IOS.MICROPHONE]);
+        });
+
+        requestMultiple([
+          PERMISSIONS.IOS.CAMERA,
+          PERMISSIONS.IOS.MICROPHONE,
+        ]).then(statuses => {
+          console.log('Camera', statuses[PERMISSIONS.IOS.CAMERA]);
+          console.log('FaceID', statuses[PERMISSIONS.IOS.MICROPHONE]);
+          if (statuses[PERMISSIONS.IOS.CAMERA] === 'blocked') {
+            Alert.alert('You need to allow camera permission');
+            twilioVideo.current.disconnect();
+            return;
+          }
+          if (statuses[PERMISSIONS.IOS.MICROPHONE] === 'blocked') {
+            Alert.alert('You need to allow microphone permission');
+            twilioVideo.current.disconnect();
+            return;
+          }
+        });
+      } catch (e) {
+        Alert.alert('You need to allow camera and microphone permissions');
+        return;
+      }
+    }
+
     if (Platform.OS === 'android') {
       await _requestAudioPermission();
       await _requestCameraPermission();
@@ -44,15 +83,15 @@ const Twilio = () => {
         });
         setStatus('connecting');
       } catch (e) {
-        console.log('e :>> ', e);
+        Alert.alert(`Oops, you got error: ${e}`);
       }
     }
   };
 
   const _onEndButtonPress = () => {
     if (twilioVideo) {
+      twilioVideo.current.disconnect();
     }
-    twilioVideo.current.disconnect();
   };
 
   const _onMuteButtonPress = () => {
@@ -81,21 +120,15 @@ const Twilio = () => {
     setStatus('connected');
   };
 
-  const _onRoomDidDisconnect = ({error}: any) => {
-    console.log('ERROR: ', error);
-
+  const _onRoomDidDisconnect = () => {
     setStatus('disconnected');
   };
 
-  const _onRoomDidFailToConnect = (error: any) => {
-    console.log('ERROR: ', error);
-
+  const _onRoomDidFailToConnect = () => {
     setStatus('disconnected');
   };
 
   const _onParticipantAddedVideoTrack = ({participant, track}: any) => {
-    console.log('onParticipantAddedVideoTrack: ', participant, track);
-
     setVideoTracks(
       new Map([
         ...videoTracks,
@@ -107,9 +140,7 @@ const Twilio = () => {
     );
   };
 
-  const _onParticipantRemovedVideoTrack = ({participant, track}: any) => {
-    console.log('onParticipantRemovedVideoTrack: ', participant, track);
-
+  const _onParticipantRemovedVideoTrack = ({track}: any) => {
     const newVideoTracks = new Map(videoTracks);
     newVideoTracks.delete(track.trackSid);
 
